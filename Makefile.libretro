@@ -327,6 +327,18 @@ else ifeq ($(platform), miyoo)
    SHARED := -shared -Wl,--no-undefined -Wl,--version-script=link.T
    CFLAGS += -ffast-math -march=armv5te -mtune=arm926ej-s -fomit-frame-pointer
    ENDIANNESS_DEFINES += -DLSB_FIRST -DBYTE_ORDER=LITTLE_ENDIAN -DALIGN_DWORD
+
+# XYDDS
+else ifeq ($(platform), xydds)
+   TARGET := $(TARGET_NAME)_libretro.so
+   CC = /opt/xydds/usr/bin/arm-linux-gcc
+   CXX = /opt/xydds/usr/bin/arm-linux-g++
+   AR = /opt/xydds/usr/bin/arm-linux-ar
+   fpic := -fPIC
+   SHARED := -shared -Wl,--no-undefined -Wl,--version-script=link.T
+   CFLAGS += -ffast-math -marm -mfpu=neon-vfpv4 -mfloat-abi=hard -fomit-frame-pointer
+   CFLAGS += -DARM -mcpu=cortex-a7
+   ENDIANNESS_DEFINES += -DLSB_FIRST -DBYTE_ORDER=LITTLE_ENDIAN -DALIGN_DWORD
    
 # else ifneq (,$(findstring armv,$(platform)))
 #    TARGET := $(TARGET_NAME)_libretro.so
